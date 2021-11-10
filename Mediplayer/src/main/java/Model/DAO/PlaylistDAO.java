@@ -117,13 +117,15 @@ public class PlaylistDAO extends Playlist {
 			PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
 			ps.setString(1, name);
 			ResultSet rs = ps.executeQuery();
-			Playlist a = new Playlist();
-			a.setId(rs.getInt("id"));
-			a.setName(rs.getString("nombre"));
-			a.setDescription(rs.getString("descripcion"));
-			a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
-			a.setSongs(List_SongDAO.List_All_Songs_By_Playlist(rs.getInt("id")));
-			Playlist = a;
+			if (rs.next()) {
+				Playlist a = new Playlist();
+				a.setId(rs.getInt("id"));
+				a.setName(rs.getString("nombre"));
+				a.setDescription(rs.getString("descripcion"));
+				a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
+				a.setSongs(List_SongDAO.List_All_Songs_By_Playlist(rs.getInt("id")));
+				Playlist = a;
+			}
 			rs.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();

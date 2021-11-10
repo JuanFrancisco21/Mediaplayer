@@ -18,8 +18,8 @@ public class UserDAO extends User {
     private final static String DELETE_by_Id = "DELETE FROM user WHERE id = ?";
     private final static String DELETE_by_Name = "DELETE FROM user WHERE nombre = ?";
     private final static String SELECT_All = "SELECT * FROM user";
-    private final static String SELECT_by_Id = "SELECT id, nombre, nacionalidad, foto FROM user WHERE id = ?";
-    private final static String SELECT_by_Name = "SELECT id, nombre, nacionalidad, foto FROM user WHERE nombre = ?";
+    private final static String SELECT_by_Id = "SELECT id, nombre, correo FROM user WHERE id = ?";
+    private final static String SELECT_by_Name = "SELECT id, nombre, correo FROM user WHERE nombre = ?";
     
     /**
      * Constructor
@@ -147,11 +147,13 @@ public class UserDAO extends User {
 				PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
 				ps.setString(1, name);
 				ResultSet rs = ps.executeQuery();
-				User a = new User();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("nombre"));
-				a.setCorreo(rs.getString("correo"));
-				User = a;
+				if (rs.next()) {
+					User a = new User();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					a.setCorreo(rs.getString("correo"));
+					User = a;
+				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();

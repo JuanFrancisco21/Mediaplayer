@@ -7,56 +7,56 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Artist;
-import Model.List_Song;
+import Model.Play;
 import Model.Song;
+import Model.Subscribe;
 import Utils.Conexion;
 
-public class List_SongDAO extends List_Song {
-	private final static String INSERTUPDATE="INSERT INTO list_Song (id, id_lista, id_cancion) "
+public class SubscribeDAO extends Subscribe {
+	private final static String INSERTUPDATE="INSERT INTO subscribe (id, id_usuario, id_lista) "
 			+ "VALUES (?,?,?) "
-			+ "ON DUPLICATE KEY UPDATE id=?, id_lista=?, id_cancion=?";
-    private final static String DELETE_by_Id = "DELETE FROM list_Song WHERE id = ?";
-    private final static String SELECT_All = "SELECT * FROM list_Song";
-    private final static String SELECT_All_By_List = "SELECT id_cancion FROM list_Song WHERE id_lista = ?";
-    private final static String SELECT_by_Id = "SELECT id, id_lista, id_cancion FROM list_Song WHERE id = ?";
+			+ "ON DUPLICATE KEY UPDATE id=?, id_usuario=?, id_lista=?";
+    private final static String DELETE_by_Id = "DELETE FROM subscribe WHERE id = ?";
+    private final static String SELECT_All = "SELECT * FROM subscribe";
+    private final static String SELECT_All_By_List = "SELECT id_lista FROM subscribe WHERE id_usuario = ?";
+    private final static String SELECT_by_Id = "SELECT id, id_lista, id_lista FROM subscribe WHERE id = ?";
     
     /**
      * Constructor
      */
-    public List_SongDAO() {
+    public SubscribeDAO() {
         super();
     }
     
     /**
      * Parameterized constructor
      *
-     * @param a List_Song to update
+     * @param a Play to update
      */
-    public List_SongDAO(List_Song a) {
+    public SubscribeDAO(Subscribe a) {
         this.setId(a.getId());
+        this.setUser(a.getUser());
         this.setList(a.getList());
-        this.setSong(a.getSong());
     }
     
     /**
      * Constructor
      *
-     * @param  id of the List_Song
+     * @param  id of the Subscribe
      */
-    public List_SongDAO(Integer id) {
-        this(List_SongDAO.List_List_Song_By_Id(id));
+    public SubscribeDAO(Integer id) {
+        this(SubscribeDAO.List_Subscribe_By_Id(id));
     }
     
     
 	/**
-	 * List List_Song by id
+	 * List Subscribe by id
 	 *
-	 * @param id unique for all the List_Song
-	 * @return the List_Song with that id
+	 * @param id unique for all the Subscribe
+	 * @return the Subscribe with that id
 	 */
-	public static List_Song List_List_Song_By_Id(Integer id) {
-		List_Song List_Song = new List_Song();
+	public static Subscribe List_Subscribe_By_Id(Integer id) {
+		Subscribe Subscribe = new Subscribe();
 		Connection c = Conexion.getConexion();
 
 		if (c != null) {
@@ -65,27 +65,27 @@ public class List_SongDAO extends List_Song {
 				ps.setInt(1, id);
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
-					List_Song a = new List_Song();
+					Subscribe a = new Subscribe();
 					a.setId(rs.getInt("id"));
+					a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
 					a.setList(PlaylistDAO.List_Playlist_By_Id(rs.getInt("id_lista")));
-					a.setSong(SongDAO.List_Song_By_Id(rs.getInt("id_cancion")));
-					List_Song = a;
+					Subscribe = a;
 				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
 		}
-		return List_Song;
+		return Subscribe;
 	}
 
 	/**
-	 * List all the List_Song
+	 * List all the Subscribe
 	 *
-	 * @return All the List_Song
+	 * @return All the Subscribe
 	 */
-	public static List<List_Song> List_All_List_Song() {
-		List<List_Song> List_Song = new ArrayList<List_Song>();
+	public static List<Subscribe> List_All_Subscribe() {
+		List<Subscribe> Subscribe = new ArrayList<Subscribe>();
 		Connection c = Conexion.getConexion();
 
 		if (c != null) {
@@ -93,50 +93,50 @@ public class List_SongDAO extends List_Song {
 				PreparedStatement ps = c.prepareStatement(SELECT_All);
 				ResultSet rs = ps.executeQuery();
 				while (rs != null && rs.next()) {
-					List_Song a = new List_Song();
+					Subscribe a = new Subscribe();
 					a.setId(rs.getInt("id"));
+					a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
 					a.setList(PlaylistDAO.List_Playlist_By_Id(rs.getInt("id_lista")));
-					a.setSong(SongDAO.List_Song_By_Id(rs.getInt("id_cancion")));
-					List_Song.add(a);
+					Subscribe.add(a);
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
 		}
-		return List_Song;
+		return Subscribe;
 	}
 	
 	/**
-	 * List all the Songs of a list
+	 * List all the Subscribe of a list
 	 *
-	 * @param id of the list 
-	 * @return All the Songs
+	 * @param id of the user 
+	 * @return All the Subscribes
 	 */
 
-	public static List<Song> List_All_Songs_By_Playlist(Integer id_list) {
-		List<Song> Songs = new ArrayList<Song>();
+	/*public static List<Subscribe> List_All_Subscribe_Of_User(Integer id_user) {
+		List<Subscribe> Subscribe = new ArrayList<Subscribe>();
 		Connection c = Conexion.getConexion();
 
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(SELECT_All_By_List);
-				ps.setInt(1, id_list);
+				ps.setInt(1, id_user);
 				ResultSet rs = ps.executeQuery();
 				while (rs != null && rs.next()) {
-					Songs.add(SongDAO.List_Song_By_Id(rs.getInt("id_cancion")));
+					Subscribe.add(SongDAO.List_Song_By_Id(rs.getInt("id_cancion")));
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
 		}
-		return Songs;
-	}
+		return Subscribe;
+	}*/
 
 
 	/**
-	 * Create new List_Song if don´t exist, or update if exist.
+	 * Create new Subscribe if don´t exist, or update if exist.
 	 * 
-	 * @return true if the List_Song has been updated/insert, false if not
+	 * @return true if the Subscribe has been updated/insert, false if not
 	 */
 	public boolean insert_update() {
 		boolean result = false;
@@ -146,18 +146,18 @@ public class List_SongDAO extends List_Song {
 			try {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
 				q.setInt(1, this.id);
-				q.setInt(2, this.list.getId());
-				q.setInt(3, this.song.getId());
+				q.setInt(2, this.user.getId());
+				q.setInt(3, this.list.getId());
 				q.setInt(4, this.id);
-				q.setInt(5, this.list.getId());
-				q.setInt(6, this.song.getId());
+				q.setInt(5, this.user.getId());
+				q.setInt(6, this.list.getId());
 
 				int i = q.executeUpdate();
 				if (i > 1) {
 					result = true;
 				}
 			} catch (SQLException e) {
-				System.out.println("Error al guardar/insertar List_Song");
+				System.out.println("Error al guardar/insertar suscribirse");
 				e.printStackTrace();
 			}
 		}
@@ -165,12 +165,12 @@ public class List_SongDAO extends List_Song {
 	}
 
 	/**
-	 * Remove a List_Song by id
+	 * Remove a Subscribe by id
 	 *
-	 * @param id unique for all the List_Song
-	 * @return true if the List_Song has been removed, false if not
+	 * @param id unique for all the Subscribe
+	 * @return true if the Subscribe has been removed, false if not
 	 */
-	public static boolean Remove_List_Song_by_Id(Integer id) {
+	public static boolean Remove_Subscribe_by_Id(Integer id) {
 		boolean result = false;
 		Connection c = Conexion.getConexion();
 
@@ -191,11 +191,11 @@ public class List_SongDAO extends List_Song {
 
 
 	/**
-	 * Remove a List_Song
+	 * Remove a Subscribe
 	 *
-	 * @return true if the List_Song has been removed, false if not
+	 * @return true if the Subscribe has been removed, false if not
 	 */
-	public boolean remove_List_Song() {
+	public boolean remove_Subscribe() {
 		boolean result = false;
 		Connection c = Conexion.getConexion();
 
@@ -213,5 +213,4 @@ public class List_SongDAO extends List_Song {
 		}
 		return result;
 	}
-	
 }

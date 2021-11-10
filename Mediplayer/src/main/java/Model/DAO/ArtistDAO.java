@@ -150,12 +150,14 @@ public class ArtistDAO extends Artist{
 				PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
 				ps.setString(1, name);
 				ResultSet rs = ps.executeQuery();
-				Artist a = new Artist();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("nombre"));
-				a.setNationality(rs.getString("nacionalidad"));
-				a.setPhoto(rs.getString("foto"));
-				artist = a;
+				if (rs.next()) {
+					Artist a = new Artist();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					a.setNationality(rs.getString("nacionalidad"));
+					a.setPhoto(rs.getString("foto"));
+					artist = a;
+				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();

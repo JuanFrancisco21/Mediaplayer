@@ -13,7 +13,7 @@ public class Conexion {
 	private static Connection con;
 	
 	private final static String server="jdbc:Mysql://localhost";
-	private final static String database="Mediplayer";
+	private final static String database="mediaplayer";
 	private final static String username="root";
 	private final static String password="";
 	

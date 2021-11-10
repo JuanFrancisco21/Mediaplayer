@@ -141,10 +141,12 @@ public class GenderDAO extends Gender{
 				PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
 				ps.setString(1, name);
 				ResultSet rs = ps.executeQuery();
-				Gender a = new Gender();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("nombre"));
-				Gender = a;
+				if (rs.next()) {
+					Gender a = new Gender();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					Gender = a;
+				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();

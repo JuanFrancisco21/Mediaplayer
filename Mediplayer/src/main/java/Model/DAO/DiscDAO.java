@@ -186,13 +186,15 @@ public class DiscDAO extends Disc {
 				PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
 				ps.setString(1, name);
 				ResultSet rs = ps.executeQuery();
-				Disc a = new Disc();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("nombre"));
-				a.setDate(rs.getDate("fecha"));
-				a.setPhoto(rs.getString("foto"));
-				a.setArtist(ArtistDAO.List_Artist_By_Id(rs.getInt("id_artista")));
-				Disc = a;
+				if (rs.next()) {
+					Disc a = new Disc();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					a.setDate(rs.getDate("fecha"));
+					a.setPhoto(rs.getString("foto"));
+					a.setArtist(ArtistDAO.List_Artist_By_Id(rs.getInt("id_artista")));
+					Disc = a;
+				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();

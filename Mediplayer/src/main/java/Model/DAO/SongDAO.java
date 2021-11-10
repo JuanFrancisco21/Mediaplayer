@@ -185,13 +185,15 @@ public class SongDAO extends Song{
 				PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
 				ps.setString(1, name);
 				ResultSet rs = ps.executeQuery();
-				Song a = new Song();
-				a.setId(rs.getInt("id"));
-				a.setName(rs.getString("nombre"));
-				a.setDuration(rs.getInt("duracion"));
-				a.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
-				a.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
-				Song = a;
+				if (rs.next()) {
+					Song a = new Song();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					a.setDuration(rs.getInt("duracion"));
+					a.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
+					a.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
+					Song = a;
+				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();
