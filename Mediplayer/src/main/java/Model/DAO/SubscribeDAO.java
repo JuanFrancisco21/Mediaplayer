@@ -153,7 +153,7 @@ public class SubscribeDAO extends Subscribe {
 				q.setInt(6, this.list.getId());
 
 				int i = q.executeUpdate();
-				if (i > 1) {
+				if (i >= 1) {
 					result = true;
 				}
 			} catch (SQLException e) {
@@ -179,7 +179,7 @@ public class SubscribeDAO extends Subscribe {
 				PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
 				ps.setInt(1, id);
 				int i = ps.executeUpdate();
-				if (i > 1) {
+				if (i >= 1) {
 					result = true;
 				}
 			} catch (SQLException ex) {
@@ -204,7 +204,7 @@ public class SubscribeDAO extends Subscribe {
 				PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
 				ps.setInt(1, this.getId());
 				int i = ps.executeUpdate();
-				if (i > 1) {
+				if (i >= 1) {
 					result = true;
 				}
 			} catch (SQLException ex) {

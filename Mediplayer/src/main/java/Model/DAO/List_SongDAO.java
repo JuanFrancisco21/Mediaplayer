@@ -153,7 +153,7 @@ public class List_SongDAO extends List_Song {
 				q.setInt(6, this.song.getId());
 
 				int i = q.executeUpdate();
-				if (i > 1) {
+				if (i >= 1) {
 					result = true;
 				}
 			} catch (SQLException e) {
@@ -179,7 +179,7 @@ public class List_SongDAO extends List_Song {
 				PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
 				ps.setInt(1, id);
 				int i = ps.executeUpdate();
-				if (i > 1) {
+				if (i >= 1) {
 					result = true;
 				}
 			} catch (SQLException ex) {
@@ -204,7 +204,7 @@ public class List_SongDAO extends List_Song {
 				PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
 				ps.setInt(1, this.getId());
 				int i = ps.executeUpdate();
-				if (i > 1) {
+				if (i >= 1) {
 					result = true;
 				}
 			} catch (SQLException ex) {

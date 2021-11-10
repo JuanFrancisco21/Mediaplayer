@@ -173,7 +173,7 @@ public class PlaylistDAO extends Playlist {
 			PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
 			ps.setInt(1, id);
 			int i = ps.executeUpdate();
-			if (i > 1) {
+			if (i >= 1) {
 				result = true;
 			}
 		} catch (SQLException ex) {
@@ -196,7 +196,7 @@ public class PlaylistDAO extends Playlist {
 			PreparedStatement ps = c.prepareStatement(DELETE_by_Name);
 			ps.setString(1, name);
 			int i = ps.executeUpdate();
-			if (i > 1) {
+			if (i >= 1) {
 				result = true;
 			}
 		} catch (SQLException ex) {
@@ -217,7 +217,7 @@ public class PlaylistDAO extends Playlist {
 			PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
 			ps.setInt(1, this.getId());
 			int i = ps.executeUpdate();
-			if (i > 1) {
+			if (i >= 1) {
 				result = true;
 			}
 		} catch (SQLException ex) {
