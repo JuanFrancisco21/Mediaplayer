@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="center" hgap="10" prefHeight="253.0" prefWidth="295.0" styleClass="root" vgap="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+    <padding>
+        <Insets bottom="10.0" left="25.0" right="25.0" top="50.0" />
+    </padding>
+    <gridLinesVisible>false</gridLinesVisible>
+
+    
+    <Text id="welcome-text" fx:id="loginText" text="Welcome" wrappingWidth="177.03125" GridPane.columnSpan="2" />
+ 
+    <Label text="User Name:" GridPane.rowIndex="1" />
+   <Label fx:id="label4" text="Email:" visible="false" GridPane.rowIndex="2" />
+ 
+    <Label text="Password:" GridPane.rowIndex="3" />
+   <Label fx:id="label3" text="Password:" visible="false" GridPane.rowIndex="4">
+      <GridPane.margin>
+         <Insets top="3.0" />
+      </GridPane.margin>
+   </Label>
+ 
+    <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   <TextField fx:id="email" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <GridPane.margin>
+         <Insets bottom="3.0" top="3.0" />
+      </GridPane.margin>
+   </TextField>
+ 
+    <PasswordField fx:id="password" onAction="#LogUser" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <GridPane.margin>
+         <Insets top="1.0" />
+      </GridPane.margin></PasswordField>
+   <PasswordField fx:id="password2" onAction="#ReturnLogin" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <GridPane.margin>
+         <Insets top="2.0" />
+      </GridPane.margin>
+   </PasswordField>
+
+          <Text fx:id="loginStatusLabel" GridPane.columnIndex="1" GridPane.rowIndex="9">
+      <GridPane.margin>
+         <Insets bottom="5.0" />
+      </GridPane.margin>
+   </Text>
+    
+    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
+        <Button fx:id="sing_in" onAction="#LogUser" text="Sign In" />
+      <Button fx:id="sing_up" onAction="#LoadSingup" text="Register" />
+      <GridPane.margin>
+         <Insets top="2.0" />
+      </GridPane.margin>  <!--onAction="handleSubmitButtonAction(event);"-->
+    </HBox>
+   <HBox prefHeight="36.0" prefWidth="77.0" GridPane.rowIndex="6">
+      <children>
+         <Button fx:id="save" onAction="#ReturnLogin" text="Save" visible="false" />
+         <Button fx:id="cancel" onAction="#Return" text="Cancel" visible="false">
+            <HBox.margin>
+               <Insets left="6.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+      <GridPane.margin>
+         <Insets top="4.0" />
+      </GridPane.margin>
+   </HBox>
+    
+    <stylesheets>
+        <URL value="@Login.css" />
+    </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="114.0" minWidth="95.0" prefWidth="77.0" />
+      <ColumnConstraints maxWidth="146.0" minWidth="101.0" prefWidth="138.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>

@@ -1,0 +1,46 @@
+/*  Modificar el color de fondo del área del Panel de TabPane */
+.tab-pane {
+    -fx-background-color: #e6e6e6;
+}
+/* Modificar el color de fondo de la pestaña */
+.tab {
+    -fx-background-color: #333333;
+}
+/*  Modificar el color de fondo de la barra superior */
+.tab-pane>*.tab-header-area>*.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #333333;
+}
+/* Modificar el color del texto en la pestaña */
+.tab-label {
+    -fx-text-fill: rgb(245, 245, 245);
+}
+/*  Selector secundario, seleccione su etiqueta de elemento secundario cuando se selecciona Tabulador */
+.tab:selected .tab-label {
+    -fx-text-fill: #003333ff;
+}
+/*  Establecer el color de fondo cuando se selecciona la pestaña */
+.tab:selected {
+    -fx-background-color: #3AC498;
+}
+/*  Cuando se selecciona Tab, seleccione su borde y modifique el estilo*/ 
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-color: #4d1a4dff;
+}
+#title-text {
+   -fx-font-size: 28px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+.tab-button {
+   -fx-background-color:  #0080ff;
+}
+.anchorpanel {
+   -fx-background-color:  #333333;
+}
+.sesion{
+    -fx-background-color: #333333!;
+}

@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+   <children>
+      <TabPane prefHeight="200.0" prefWidth="200.0" stylesheets="@Main.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab onSelectionChanged="#initPlaylist" text="Playlist">
+            <content>
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.30877742946708464" layoutX="49.0" layoutY="105.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <Text id="title-text" fx:id="loginText" layoutX="5.0" layoutY="25.0" text="PlayList" wrappingWidth="177.03125" />
+                                    <VBox layoutX="36.0" layoutY="102.0" prefHeight="284.0" prefWidth="194.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+                                       <children>
+                                          <Label text="Nombre:" />
+                                          <TextField fx:id="NombrePlaylist">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </TextField>
+                                          <Label text="Descripción:" />
+                                          <TextArea fx:id="DescripcionPlaylist" prefHeight="112.0" prefWidth="174.0">
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </TextArea>
+                                          <Label text="Usuario">
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TextField fx:id="CreadorPlaylist" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <ButtonBar layoutY="364.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                      <buttons>
+                                        <Button fx:id="AñadirPlaylist" mnemonicParsing="false" onAction="#addPlaylist" text="Crear" />
+                                          <Button fx:id="BorrarPlaylist" mnemonicParsing="false" onAction="#BorrarPlaylist" text="Borrar" />
+                                      </buttons>
+                                       <padding>
+                                          <Insets bottom="5.0" right="15.0" />
+                                       </padding>
+                                    </ButtonBar>
+                                    <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                       <buttons>
+                                          <Button fx:id="PlaylistPlaylist" mnemonicParsing="false" onAction="#followPlylist" text="Seguir" visible="false" />
+                                          <Button fx:id="PlaylistPlaylist2" mnemonicParsing="false" onAction="#unfollowPlylist" text="No Seguir" visible="false" />
+                                       </buttons>
+                                       <padding>
+                                          <Insets right="15.0" />
+                                       </padding>
+                                    </ButtonBar>
+                                    <ButtonBar layoutY="324.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                       <buttons>
+                                          <Button fx:id="CancionesPlaylist" mnemonicParsing="false" onAction="#addSongtoPlylist" text="Añadir" visible="false" />
+                                          <Button fx:id="CancionesPlaylist2" mnemonicParsing="false" onAction="#BorrarSongfromPlylist" text="Quitar Canción" visible="false" />
+                                       </buttons>
+                                       <padding>
+                                          <Insets right="15.0" />
+                                       </padding>
+                                    </ButtonBar>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TabPane fx:id="dos" layoutX="88.0" layoutY="-44.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <tabs>
+                                        <Tab onSelectionChanged="#notshowCancionesTab" text="MisPlaylist">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="tablaPlayList" prefHeight="314.0" prefWidth="337.0" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="cp1" prefWidth="118.0" text="Nombre" />
+                                                            <TableColumn fx:id="cp2" maxWidth="1.7976931348623157E308" prefWidth="191.0" text="Descripción" />
+                                                            <TableColumn fx:id="cp3" prefWidth="135.0" text="Creador" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView fx:id="tablaCancionesPlaylist" prefHeight="197.0" prefWidth="432.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="csp1" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="116.0" text="Canción" />
+                                                            <TableColumn fx:id="csp2" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="105.0" text="Reproducciones" />
+                                                            <TableColumn fx:id="csp3" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="74.0" text="Genero" />
+                                                            <TableColumn fx:id="csp4" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="95.0" text="Disco" />
+                                                            <TableColumn fx:id="csp5" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="69.0" text="Duracción" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab fx:id="TabBuscar" onSelectionChanged="#initPlaylistCanciones" text="Canciones">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="tablaallCanciones" prefHeight="197.0" prefWidth="432.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="css1" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="116.0" text="Canción" />
+                                                            <TableColumn fx:id="css2" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="105.0" text="Reproducciones" />
+                                                            <TableColumn fx:id="css3" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="74.0" text="Genero" />
+                                                            <TableColumn fx:id="css4" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="95.0" text="Disco" />
+                                                            <TableColumn fx:id="css5" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="69.0" text="Duracción" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                          <Tab onSelectionChanged="#initPlaylistBuscar" text="PlayList">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView fx:id="tablaallPlayList" prefHeight="314.0" prefWidth="337.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="cpp1" prefWidth="118.0" text="Nombre" />
+                                                            <TableColumn fx:id="cpp2" maxWidth="1.7976931348623157E308" prefWidth="191.0" text="Descripción" />
+                                                            <TableColumn fx:id="cpp3" prefWidth="135.0" text="Creador" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="TabAdmin" text="Admin">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane layoutX="194.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <tabs>
+                              <Tab onSelectionChanged="#initArtista" text="Artista">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane dividerPositions="0.719435736677116" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Text id="title-text" fx:id="loginText1" layoutX="5.0" layoutY="25.0" text="Artista" wrappingWidth="177.03125" />
+                                                      <VBox alignment="TOP_RIGHT" layoutX="36.0" layoutY="102.0" prefHeight="331.0" prefWidth="456.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+                                                         <children>
+                                                            <HBox prefHeight="42.0" prefWidth="436.0">
+                                                               <children>
+                                                                  <Label text="Nombre:" />
+                                                                  <TextField fx:id="NombreArtista" prefHeight="25.0" prefWidth="133.0">
+                                                                     <HBox.margin>
+                                                                        <Insets left="5.0" />
+                                                                     </HBox.margin>
+                                                                  </TextField>
+                                                                  <Label text="Nacionalidad:">
+                                                                     <HBox.margin>
+                                                                        <Insets left="15.0" />
+                                                                     </HBox.margin>
+                                                                  </Label>
+                                                                  <TextField fx:id="NacionalidadArtista">
+                                                                     <HBox.margin>
+                                                                        <Insets left="10.0" />
+                                                                     </HBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="42.0" prefWidth="436.0">
+                                                               <children>
+                                                                  <Label text="Foto:">
+                                                                     <HBox.margin>
+                                                                        <Insets left="20.0" />
+                                                                     </HBox.margin>
+                                                                  </Label>
+                                                                  <TextField fx:id="FotoArtista" prefHeight="25.0" prefWidth="133.0">
+                                                                     <HBox.margin>
+                                                                        <Insets left="5.0" />
+                                                                     </HBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets top="5.0" />
+                                                               </VBox.margin>
+                                                            </HBox>
+                                                            <HBox alignment="TOP_CENTER" prefHeight="272.0" prefWidth="421.0">
+                                                               <children>
+                                                                  <ImageView fx:id="foartista" fitHeight="248.0" fitWidth="431.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <HBox.margin>
+                                                                        <Insets right="20.0" top="10.0" />
+                                                                     </HBox.margin></ImageView>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets top="5.0" />
+                                                               </padding>
+                                                            </HBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                      <ButtonBar layoutY="364.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <padding>
+                                                            <Insets bottom="5.0" right="15.0" />
+                                                         </padding>
+                                                         <buttons>
+                                                            <Button fx:id="AñadirArtista" mnemonicParsing="false" onAction="#addArtista" text="Añadir" />
+                                                            <Button fx:id="BorrarArtista" mnemonicParsing="false" onAction="#BorrarArtista" text="Borrar" />
+                                                         </buttons>
+                                                      </ButtonBar>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <TableView fx:id="tablaArtistas" layoutX="238.0" prefHeight="314.0" prefWidth="337.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="ca1" maxWidth="118.0" prefWidth="110.0" text="Nombre" />
+                                                            <TableColumn fx:id="ca2" maxWidth="101.0" prefWidth="91.0" text="Nacionalidad" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </items>
+                                          </SplitPane>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab onSelectionChanged="#initDisco" text="Disco">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane dividerPositions="0.719435736677116" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Text id="title-text" fx:id="loginText11" layoutX="5.0" layoutY="25.0" text="Disco" wrappingWidth="177.03125" />
+                                                      <VBox alignment="TOP_RIGHT" layoutX="36.0" layoutY="102.0" prefHeight="318.0" prefWidth="455.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+                                                         <children>
+                                                            <VBox maxHeight="-Infinity" prefHeight="70.0" prefWidth="436.0">
+                                                               <children>
+                                                                  <HBox prefHeight="42.0" prefWidth="436.0">
+                                                                     <children>
+                                                                        <Label text="Nombre:" />
+                                                                        <TextField fx:id="NombreDisco" prefHeight="25.0" prefWidth="160.0">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" />
+                                                                           </HBox.margin>
+                                                                        </TextField>
+                                                                        <Label text="Artista:">
+                                                                           <HBox.margin>
+                                                                              <Insets left="15.0" />
+                                                                           </HBox.margin>
+                                                                        </Label>
+                                                                        <ChoiceBox fx:id="ArtistaDisco" prefWidth="150.0">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" />
+                                                                           </HBox.margin>
+                                                                        </ChoiceBox>
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox prefHeight="42.0" prefWidth="436.0">
+                                                                     <children>
+                                                                        <Label text="Fecha:">
+                                                                           <HBox.margin>
+                                                                              <Insets left="13.0" />
+                                                                           </HBox.margin>
+                                                                        </Label>
+                                                                        <DatePicker fx:id="FechaDisco" />
+                                                                        <Label text="Foto:">
+                                                                           <HBox.margin>
+                                                                              <Insets left="30.0" />
+                                                                           </HBox.margin>
+                                                                        </Label>
+                                                                        <TextField fx:id="FotoDisco" prefHeight="25.0" prefWidth="150.0">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" />
+                                                                           </HBox.margin>
+                                                                        </TextField>
+                                                                     </children>
+                                                                     <VBox.margin>
+                                                                        <Insets top="5.0" />
+                                                                     </VBox.margin>
+                                                                  </HBox>
+                                                               </children>
+                                                            </VBox>
+                                                            <HBox alignment="TOP_CENTER" prefHeight="291.0" prefWidth="457.0">
+                                                               <children>
+                                                                  <ImageView fx:id="fodisco" fitHeight="233.0" fitWidth="407.0" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets />
+                                                               </VBox.margin>
+                                                            </HBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                      <ButtonBar layoutY="364.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <padding>
+                                                            <Insets bottom="5.0" right="15.0" />
+                                                         </padding>
+                                                         <buttons>
+                                                            <Button fx:id="AñadirDisco" mnemonicParsing="false" onAction="#addDisco" text="Añadir" />
+                                                            <Button fx:id="BorrarDisco" mnemonicParsing="false" onAction="#BorrarDisco" text="Borrar" />
+                                                         </buttons>
+                                                      </ButtonBar>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <TableView fx:id="tablaDiscos" prefHeight="314.0" prefWidth="337.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="cd1" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="115.0" text="Nombre" />
+                                                            <TableColumn fx:id="cd2" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="85.0" text="Artista" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </items>
+                                          </SplitPane>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab onSelectionChanged="#initCanciones" text="Canción">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane dividerPositions="0.30094043887147337" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Text id="title-text" fx:id="loginText111" layoutX="5.0" layoutY="25.0" text="Canción" wrappingWidth="177.03125" />
+                                                      <VBox alignment="TOP_RIGHT" layoutX="36.0" layoutY="102.0" prefHeight="318.0" prefWidth="455.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+                                                         <children>
+                                                            <VBox maxHeight="-Infinity" prefHeight="70.0" prefWidth="436.0">
+                                                               <children>
+                                                                  <Label text="Nombre:" />
+                                                                  <TextField fx:id="NombreCancion" prefHeight="25.0" prefWidth="160.0" />
+                                                                  <Label text="Duracion:">
+                                                                     <VBox.margin>
+                                                                        <Insets top="5.0" />
+                                                                     </VBox.margin></Label>
+                                                                  <TextField fx:id="DuracionCancion" prefHeight="25.0" prefWidth="160.0" />
+                                                                  <Label text="Disco:">
+                                                                     <VBox.margin>
+                                                                        <Insets top="5.0" />
+                                                                     </VBox.margin></Label>
+                                                                  <ChoiceBox fx:id="DiscoCancion" prefWidth="150.0" />
+                                                                  <Label text="Genero:">
+                                                                     <VBox.margin>
+                                                                        <Insets top="5.0" />
+                                                                     </VBox.margin></Label>
+                                                                  <ChoiceBox fx:id="GeneroCancion" prefWidth="150.0" />
+                                                                  <HBox prefHeight="42.0" prefWidth="436.0" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                      <ButtonBar layoutY="364.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <padding>
+                                                            <Insets bottom="5.0" right="15.0" />
+                                                         </padding>
+                                                         <buttons>
+                                                            <Button fx:id="AñadirCancion" mnemonicParsing="false" onAction="#addCancion" text="Añadir" />
+                                                            <Button fx:id="BorrarCancion" mnemonicParsing="false" onAction="#BorrarCancion" text="Borrar" />
+                                                         </buttons>
+                                                      </ButtonBar>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <TableView fx:id="tablaCanciones" prefHeight="314.0" prefWidth="337.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="cs1" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="116.0" text="Nombre" />
+                                                            <TableColumn fx:id="cs2" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="105.0" text="Reproducciones" />
+                                                            <TableColumn fx:id="cs3" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="74.0" text="Genero" />
+                                                            <TableColumn fx:id="cs4" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="95.0" text="Disco" />
+                                                            <TableColumn fx:id="cs5" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="69.0" text="Duracción" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </items>
+                                          </SplitPane>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab onSelectionChanged="#initGeneros" text="Género">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Text id="title-text" fx:id="loginText12" layoutX="5.0" layoutY="25.0" onMouseClicked="#initGeneros" text="Género" wrappingWidth="177.03125" />
+                                                      <VBox alignment="TOP_RIGHT" layoutY="37.0" prefHeight="331.0" prefWidth="456.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+                                                         <children>
+                                                            <HBox prefHeight="42.0" prefWidth="436.0">
+                                                               <children>
+                                                                  <Label text="Nombre:" />
+                                                                  <TextField fx:id="NombreGenero" prefHeight="25.0" prefWidth="133.0">
+                                                                     <HBox.margin>
+                                                                        <Insets left="5.0" />
+                                                                     </HBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                      <ButtonBar layoutY="364.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                         <padding>
+                                                            <Insets bottom="5.0" right="15.0" />
+                                                         </padding>
+                                                         <buttons>
+                                                            <Label />
+                                                            <Button fx:id="Añadirgenero" mnemonicParsing="false" onAction="#addGenero" text="Añadir" />
+                                                            <Button fx:id="Borrargenero" mnemonicParsing="false" onAction="#BorrarGenero" text="Borrar" />
+                                                         </buttons>
+                                                      </ButtonBar>
+                                                      <TableView fx:id="tablaGeneros" layoutX="248.0" layoutY="-38.0" prefHeight="279.0" prefWidth="289.0" AnchorPane.bottomAnchor="51.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="cg2" maxWidth="150.0" minWidth="0.0" text="id" />
+                                                            <TableColumn fx:id="cg1" maxWidth="208.0" prefWidth="206.0" text="Nombre" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </items>
+                                          </SplitPane>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab id="sesion" onSelectionChanged="#switchToLogin">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="anchorpanel" />
+              </content>
+               <graphic>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToLogin" styleClass="tab-button" text="Cerrar Sesion" />
+               </graphic>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

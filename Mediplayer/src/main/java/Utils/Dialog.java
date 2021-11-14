@@ -38,4 +38,5 @@ public class Dialog {
 		}
 		return result;
 	}
+	
 }

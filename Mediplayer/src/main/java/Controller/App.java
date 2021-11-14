@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -17,13 +19,20 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+    	  Parent root = loadFXML("Login");
+          scene = new Scene(root, root.prefWidth(0)+100, root.prefHeight(0)+50);
+          stage.setScene(scene);
+          //stage.setResizable(false);
+          stage.getIcons().add(new Image("https://play-lh.googleusercontent.com/7N4p6FtJ1jsI4vSEYY40HhHcYXTQKV5nEXyle5AMj_FMxU-UqsN_dxFL80kpM81WCQ"));
+          stage.setTitle("SoungApp");
+          stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void setRoot(String fxml) throws IOException {
+    	Parent root = loadFXML(fxml);
+        scene.getWindow().setHeight(root.prefHeight(0)+70);
+        scene.getWindow().setWidth(root.prefWidth(0)+70);
+        scene.setRoot(root);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
