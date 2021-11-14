@@ -7,14 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.Artist;
 import Model.Gender;
 import Utils.Conexion;
 
 public class GenderDAO extends Gender{
 	private final static String SELECT_by_Name_DAO = "SELECT nombre FROM gender WHERE nombre=";
-	private final static String INSERTUPDATE="INSERT INTO gender (nombre) "
+	private final static String INSERT="INSERT INTO gender (nombre) "
 			+ "VALUES (?) "
 			+ "ON DUPLICATE KEY UPDATE nombre=?";
+
+	private final static String INSERTUPDATE="INSERT INTO gender (id, nombre) "
+			+ "VALUES (?,?) "
+			+ "ON DUPLICATE KEY UPDATE id=?,nombre=?";
     private final static String DELETE_by_Id = "DELETE FROM gender WHERE id = ?";
     private final static String DELETE_by_Name = "DELETE FROM gender WHERE nombre = ?";
     private final static String SELECT_All = "SELECT * FROM gender";
@@ -125,6 +130,34 @@ public class GenderDAO extends Gender{
 		}
 		return Gender;
 	}
+	/**
+	 * List Genders by name
+	 *
+	 * @param name unique for all the Genders
+	 * @return the Genders with that name
+	 */
+	public static List<Gender> List_Genders_By_Name(String name) {
+		List<Gender> Gender = new ArrayList<Gender>();
+		Connection c = Conexion.getConexion();
+
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_by_Name_DAO);
+				ps.setString(1, name);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					Gender a = new Gender();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					Gender.add(a);
+				}
+				rs.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return Gender;
+	}
 
 	/**
 	 * List Genders by name
@@ -154,6 +187,28 @@ public class GenderDAO extends Gender{
 		}
 		return Gender;
 	}
+	/**
+	 * List all the gender name
+	 *
+	 * @return All the gender name
+	 */
+	public static List<String> List_All_Gender_Name() {
+		List<String> genders = new ArrayList<String>();
+		Connection c = Conexion.getConexion();
+
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_All);
+				ResultSet rs = ps.executeQuery();
+				while (rs != null && rs.next()) {
+					genders.add(rs.getString("nombre"));
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return genders;
+	}
 
 	/**
 	 * Create new Gender if don´t exist, or update if exist.
@@ -167,6 +222,31 @@ public class GenderDAO extends Gender{
 		if (con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
+				q.setInt(1, this.id);
+				q.setString(2, this.name);
+				q.setInt(3, this.id);
+				q.setString(4, this.name);
+				rs = q.executeUpdate();
+			} catch (SQLException e) {
+				System.out.println("Error al guardar/insertar Genero");
+				e.printStackTrace();
+			}
+		}
+		return rs;
+	}
+	
+	/**
+	 * Create new Gender if don´t exist, or update if exist.
+	 * 
+	 * @return true if the Gender has been updated/insert, false if not
+	 */
+	public int insert() {
+		int rs = 0;
+		Connection con = Conexion.getConexion();
+
+		if (con != null) {
+			try {
+				PreparedStatement q = con.prepareStatement(INSERT);
 				q.setString(1, this.name);
 				q.setString(2, this.name);
 				rs = q.executeUpdate();

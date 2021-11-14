@@ -13,11 +13,13 @@ import Utils.Conexion;
 
 public class PlaylistDAO extends Playlist {
 	private final static String INSERTUPDATE = "INSERT INTO list (nombre, descripcion, id_usuario) "
-			+ "VALUES (?,?,?,?) " + "ON DUPLICATE KEY UPDATE nombre=?,descripcion=?, id_usuario=?";
+			+ "VALUES (?,?,?) " 
+			+ "ON DUPLICATE KEY UPDATE nombre=?,descripcion=?, id_usuario=?";
 	private final static String DELETE_by_Id = "DELETE FROM list WHERE id = ?";
 	private final static String DELETE_by_Name = "DELETE FROM list WHERE nombre = ?";
 	private final static String SELECT_All = "SELECT * FROM list";
 	private final static String SELECT_by_Id = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE id = ?";
+	private final static String SELECT_by_Id_User = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE id_usuario = ?";
 	private final static String SELECT_by_Name = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE nombre = ?";
 
 	/**
@@ -30,7 +32,7 @@ public class PlaylistDAO extends Playlist {
 	/**
 	 * Parameterized constructor
 	 *
-	 * @param a Artist to update
+	 * @param a Playlist to update
 	 */
 	public PlaylistDAO(Playlist a) {
 		this.setId(a.getId());
@@ -43,17 +45,17 @@ public class PlaylistDAO extends Playlist {
 	/**
 	 * Constructor
 	 *
-	 * @param id of the artist
+	 * @param id of the Playlist
 	 */
 	public PlaylistDAO(Integer id) {
 		this(PlaylistDAO.List_Playlist_By_Id(id));
 	}
 
 	/**
-	 * List artists by id
+	 * List Playlist by id
 	 *
-	 * @param id unique for all the artist
-	 * @return the artist with that id
+	 * @param id unique for all the Playlist
+	 * @return the Playlist with that id
 	 */
 	public static Playlist List_Playlist_By_Id(Integer id) {
 		Playlist Playlist = new Playlist();
@@ -79,9 +81,36 @@ public class PlaylistDAO extends Playlist {
 	}
 
 	/**
-	 * List all the artist
+	 * List all the Playlist by de id of the user
+	 * @param id_user to search playlists
+	 * @return All the Playlists of the user
+	 */
+	public static List<Playlist> List_All_Playlist_By_User(Integer id_user) {
+		List<Playlist> Playlist = new ArrayList<Playlist>();
+		try {
+			Connection c = Conexion.getConexion();
+			PreparedStatement ps = c.prepareStatement(SELECT_by_Id_User);
+			ps.setInt(1, id_user);
+			ResultSet rs = ps.executeQuery();
+			while (rs != null && rs.next()) {
+				Playlist a = new Playlist();
+				a.setId(rs.getInt("id"));
+				a.setName(rs.getString("nombre"));
+				a.setDescription(rs.getString("descripcion"));
+				a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
+				a.setSongs(List_SongDAO.List_All_Songs_By_Playlist(rs.getInt("id")));
+				Playlist.add(a);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return Playlist;
+	}
+
+	/**
+	 * List all the Playlist
 	 *
-	 * @return All the artist
+	 * @return All the Playlist
 	 */
 	public static List<Playlist> List_All_Playlist() {
 		List<Playlist> Playlist = new ArrayList<Playlist>();
@@ -105,10 +134,10 @@ public class PlaylistDAO extends Playlist {
 	}
 
 	/**
-	 * List artists by name
+	 * List Playlists by name
 	 *
-	 * @param name unique for all the artist
-	 * @return the artist with that name
+	 * @param name unique for all the Playlists
+	 * @return the Playlists with that name
 	 */
 	public static Playlist List_Playlist_By_Name(String name) {
 		Playlist Playlist = new Playlist();
@@ -134,9 +163,9 @@ public class PlaylistDAO extends Playlist {
 	}
 
 	/**
-	 * Create new Artist if don´t exist, or update if exist.
+	 * Create new Playlist if don´t exist, or update if exist.
 	 * 
-	 * @return true if the artist has been updated/insert, false if not
+	 * @return true if the Playlist has been updated/insert, false if not
 	 */
 	public int insert_update() {
 		int rs = 0;
@@ -161,12 +190,12 @@ public class PlaylistDAO extends Playlist {
 	}
 
 	/**
-	 * Remove a artist by id
+	 * Remove a Playlist by id
 	 *
-	 * @param id unique for all the artist
-	 * @return true if the artist has been removed, false if not
+	 * @param id unique for all the Playlist
+	 * @return true if the Playlist has been removed, false if not
 	 */
-	public static boolean Remove_Artist_by_Id(Integer id) {
+	public static boolean Remove_Playlist_by_Id(Integer id) {
 		boolean result = false;
 		try {
 			Connection c = Conexion.getConexion();
@@ -183,13 +212,13 @@ public class PlaylistDAO extends Playlist {
 	}
 
 	/**
-	 * Remove a artist by name
+	 * Remove a Playlist by name
 	 *
-	 * @param name unique for all the artist
-	 * @return true if the artist has been removed, false if not
+	 * @param name unique for all the Playlist
+	 * @return true if the Playlist has been removed, false if not
 	 */
 
-	public static boolean Remove_Artist_by_Name(String name) {
+	public static boolean Remove_Playlist_by_Name(String name) {
 		boolean result = false;
 		try {
 			Connection c = Conexion.getConexion();
@@ -206,11 +235,11 @@ public class PlaylistDAO extends Playlist {
 	}
 
 	/**
-	 * Remove a artist
+	 * Remove a Playlist
 	 *
-	 * @return true if the artist has been removed, false if not
+	 * @return true if the Playlist has been removed, false if not
 	 */
-	public boolean remove_Artist() {
+	public boolean remove_Playlist() {
 		boolean result = false;
 		try {
 			Connection c = Conexion.getConexion();

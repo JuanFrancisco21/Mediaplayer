@@ -7,20 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Play;
-import Model.Song;
+import Model.Playlist;
 import Model.Subscribe;
 import Utils.Conexion;
 
 public class SubscribeDAO extends Subscribe {
-	private final static String INSERTUPDATE="INSERT INTO subscribe (id, id_usuario, id_lista) "
-			+ "VALUES (?,?,?) "
-			+ "ON DUPLICATE KEY UPDATE id=?, id_usuario=?, id_lista=?";
-    private final static String DELETE_by_Id = "DELETE FROM subscribe WHERE id = ?";
+	private final static String INSERTUPDATE="INSERT INTO subscribe (id_usuario, id_lista) "
+			+ "VALUES (?,?) "
+			+ "ON DUPLICATE KEY UPDATE  id_usuario=?, id_lista=?";
+    private final static String DELETE_by_Id = "DELETE FROM subscribe WHERE id_lista = ? AND id_usuario = ?";
     private final static String SELECT_All = "SELECT * FROM subscribe";
     private final static String SELECT_All_By_List = "SELECT id_lista FROM subscribe WHERE id_usuario = ?";
     private final static String SELECT_by_Id = "SELECT id, id_lista, id_lista FROM subscribe WHERE id = ?";
-    
+    private final static String SELECT_by_Ids= "SELECT id, id_lista, id_usuario FROM subscribe WHERE id_usuario = ? AND id_lista = ?";
+
     /**
      * Constructor
      */
@@ -78,7 +78,41 @@ public class SubscribeDAO extends Subscribe {
 		}
 		return Subscribe;
 	}
+	/**
+	 * List Subscribe by ids
+	 *
+	 * @param id unique for all the Subscribe
+	 * @return the Subscribe with that id
+	 */
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static Subscribe List_Subscribe_By_Ids(Integer id_usuario,Integer id_lista) {
+		Subscribe Subscribe = new Subscribe();
+		Connection c = Conexion.getConexion();
 
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_by_Ids);
+				ps.setInt(1, id_usuario);
+				ps.setInt(2, id_lista);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					Subscribe a = new Subscribe();
+					a.setId(rs.getInt("id"));
+					a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
+					a.setList(PlaylistDAO.List_Playlist_By_Id(rs.getInt("id_lista")));
+					Subscribe = a;
+				}
+				rs.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return Subscribe;
+	}
 	/**
 	 * List all the Subscribe
 	 *
@@ -113,8 +147,8 @@ public class SubscribeDAO extends Subscribe {
 	 * @return All the Subscribes
 	 */
 
-	/*public static List<Subscribe> List_All_Subscribe_Of_User(Integer id_user) {
-		List<Subscribe> Subscribe = new ArrayList<Subscribe>();
+	public static List<Playlist> List_All_Subscribe_Of_User(Integer id_user) {
+		List<Playlist> Subscribe = new ArrayList<Playlist>();
 		Connection c = Conexion.getConexion();
 
 		if (c != null) {
@@ -123,14 +157,14 @@ public class SubscribeDAO extends Subscribe {
 				ps.setInt(1, id_user);
 				ResultSet rs = ps.executeQuery();
 				while (rs != null && rs.next()) {
-					Subscribe.add(SongDAO.List_Song_By_Id(rs.getInt("id_cancion")));
+					Subscribe.add(PlaylistDAO.List_Playlist_By_Id(rs.getInt("id_lista")));
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
 		}
 		return Subscribe;
-	}*/
+	}
 
 
 	/**
@@ -145,12 +179,10 @@ public class SubscribeDAO extends Subscribe {
 		if (con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
-				q.setInt(1, this.id);
-				q.setInt(2, this.user.getId());
-				q.setInt(3, this.list.getId());
-				q.setInt(4, this.id);
-				q.setInt(5, this.user.getId());
-				q.setInt(6, this.list.getId());
+				q.setInt(1, this.user.getId());
+				q.setInt(2, this.list.getId());
+				q.setInt(3, this.user.getId());
+				q.setInt(4, this.list.getId());
 
 				int i = q.executeUpdate();
 				if (i >= 1) {
@@ -202,7 +234,8 @@ public class SubscribeDAO extends Subscribe {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
-				ps.setInt(1, this.getId());
+				ps.setInt(1, this.getList().getId());
+				ps.setInt(2, this.getUser().getId());
 				int i = ps.executeUpdate();
 				if (i >= 1) {
 					result = true;

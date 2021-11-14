@@ -9,17 +9,18 @@ import java.util.List;
 
 import Model.User;
 import Utils.Conexion;
+import Utils.Dialog;
 
 public class UserDAO extends User {
-	private final static String SELECT_by_Name_DAO = "SELECT nombre, correo FROM user WHERE nombre=";
-	private final static String INSERTUPDATE="INSERT INTO user (nombre, correo) "
-			+ "VALUES (?,?) "
-			+ "ON DUPLICATE KEY UPDATE nombre=?,correo=?";
+	private final static String SELECT_by_Name_DAO = "SELECT nombre, correo, password FROM user WHERE nombre=";
+	private final static String INSERTUPDATE="INSERT INTO user (nombre, correo, password) "
+			+ "VALUES (?,?,?) "
+			+ "ON DUPLICATE KEY UPDATE nombre=?,correo=?, password=?";
     private final static String DELETE_by_Id = "DELETE FROM user WHERE id = ?";
     private final static String DELETE_by_Name = "DELETE FROM user WHERE nombre = ?";
     private final static String SELECT_All = "SELECT * FROM user";
-    private final static String SELECT_by_Id = "SELECT id, nombre, correo FROM user WHERE id = ?";
-    private final static String SELECT_by_Name = "SELECT id, nombre, correo FROM user WHERE nombre = ?";
+    private final static String SELECT_by_Id = "SELECT id, nombre, correo, password FROM user WHERE id = ?";
+    private final static String SELECT_by_Name = "SELECT id, nombre, correo, password FROM user WHERE nombre = ?";
     
     /**
      * Constructor
@@ -37,6 +38,7 @@ public class UserDAO extends User {
         this.setId(a.getId());
         this.setName(a.getName());
         this.setCorreo(a.getCorreo());
+        this.setPassword(a.getPassword());
     }
     
     
@@ -67,6 +69,7 @@ public class UserDAO extends User {
 					this.setId(rs.getInt("id"));
 					this.setName(rs.getString("nombre"));
 					this.setCorreo(rs.getString("correo"));
+					this.setPassword(rs.getString("password"));
 				}
 				rs.close();
 			} catch (SQLException ex) {
@@ -95,6 +98,7 @@ public class UserDAO extends User {
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
 					a.setCorreo(rs.getString("correo"));
+					a.setPassword(rs.getString("password"));
 					User = a;
 				}
 				rs.close();
@@ -123,6 +127,7 @@ public class UserDAO extends User {
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
 					a.setCorreo(rs.getString("correo"));
+					a.setPassword(rs.getString("password"));
 					Users.add(a);
 				}
 			} catch (SQLException ex) {
@@ -140,7 +145,9 @@ public class UserDAO extends User {
 	 */
 	public static User List_User_By_Name(String name) {
 		User User = new User();
-		Connection c = Conexion.getConexion();
+		try {
+			Connection c = Conexion.getConexion();
+		
 
 		if (c != null) {
 			try {
@@ -152,12 +159,16 @@ public class UserDAO extends User {
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
 					a.setCorreo(rs.getString("correo"));
+					a.setPassword(rs.getString("password"));
 					User = a;
 				}
 				rs.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
+		}
+		} catch (Exception e) {
+			Dialog.showError("Error", "Conexión erronea", "");
 		}
 		return User;
 	}
@@ -176,8 +187,10 @@ public class UserDAO extends User {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
 				q.setString(1, this.name);
 				q.setString(2, this.correo);
-				q.setString(3, this.name);
-				q.setString(4, this.correo);
+				q.setString(3, this.password);
+				q.setString(4, this.name);
+				q.setString(5, this.correo);
+				q.setString(6, this.password);
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println("Error al guardar/insertar Usuario");

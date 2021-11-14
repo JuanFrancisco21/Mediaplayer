@@ -16,11 +16,11 @@ public class ArtistDAO extends Artist{
 	private final static String INSERTUPDATE="INSERT INTO artist (nombre, nacionalidad,foto) "
 			+ "VALUES (?,?,?) "
 			+ "ON DUPLICATE KEY UPDATE nombre=?,nacionalidad=?,foto=?";
-    private final static String DELETE_by_Id = "DELETE FROM artista WHERE id = ?";
-    private final static String DELETE_by_Name = "DELETE FROM artista WHERE nombre = ?";
-    private final static String SELECT_All = "SELECT * FROM artista";
-    private final static String SELECT_by_Id = "SELECT id, nombre, nacionalidad, foto FROM artista WHERE id = ?";
-    private final static String SELECT_by_Name = "SELECT id, nombre, nacionalidad, foto FROM artista WHERE nombre = ?";
+    private final static String DELETE_by_Id = "DELETE FROM artist WHERE id = ?";
+    private final static String DELETE_by_Name = "DELETE FROM artist WHERE nombre = ?";
+    private final static String SELECT_All = "SELECT * FROM artist";
+    private final static String SELECT_by_Id = "SELECT id, nombre, nacionalidad, foto FROM artist WHERE id = ?";
+    private final static String SELECT_by_Name = "SELECT id, nombre, nacionalidad, foto FROM artist WHERE nombre = ?";
     
     /**
      * Constructor
@@ -127,6 +127,28 @@ public class ArtistDAO extends Artist{
 					a.setNationality(rs.getString("nacionalidad"));
 					a.setPhoto(rs.getString("foto"));
 					artists.add(a);
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return artists;
+	}
+	/**
+	 * List all the artist name
+	 *
+	 * @return All the artist name
+	 */
+	public static List<String> List_All_Artist_Name() {
+		List<String> artists = new ArrayList<String>();
+		Connection c = Conexion.getConexion();
+
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_All);
+				ResultSet rs = ps.executeQuery();
+				while (rs != null && rs.next()) {
+					artists.add(rs.getString("nombre"));
 				}
 			} catch (SQLException ex) {
 				ex.printStackTrace();

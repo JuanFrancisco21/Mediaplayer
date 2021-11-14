@@ -12,15 +12,15 @@ import Model.Disc;
 import Utils.Conexion;
 
 public class DiscDAO extends Disc {
-	private final static String SELECT_by_Name_DAO = "SELECT nombre, foto, fecha, id_artista FROM disc WHERE nombre=";
-	private final static String INSERTUPDATE="INSERT INTO disc (nombre, foto, fecha, id_artista) "
+	private final static String SELECT_by_Name_DAO = "SELECT nombre, foto, date, id_artista FROM disc WHERE nombre=";
+	private final static String INSERTUPDATE="INSERT INTO disc (nombre, foto, date, id_artista) "
 			+ "VALUES (?,?,?,?) "
-			+ "ON DUPLICATE KEY UPDATE nombre=?, foto=?, fecha, id_artista=?";
+			+ "ON DUPLICATE KEY UPDATE nombre=?, foto=?, date=?, id_artista=?";
     private final static String DELETE_by_Id = "DELETE FROM disc WHERE id = ?";
     private final static String DELETE_by_Name = "DELETE FROM disc WHERE nombre = ?";
     private final static String SELECT_All = "SELECT * FROM disc";
-    private final static String SELECT_by_Id = "SELECT id, nombre, foto, fecha, id_artista FROM disc WHERE id = ?";
-    private final static String SELECT_by_Name = "SELECT id, nombre, foto, fecha, id_artista FROM disc WHERE nombre = ?";
+    private final static String SELECT_by_Id = "SELECT id, nombre, foto, date, id_artista FROM disc WHERE id = ?";
+    private final static String SELECT_by_Name = "SELECT id, nombre, foto, date, id_artista FROM disc WHERE nombre = ?";
     
     /**
      * Constructor
@@ -67,7 +67,7 @@ public class DiscDAO extends Disc {
 				if (rs.next()) {
 					this.setId(rs.getInt("id"));
 					this.setName(rs.getString("nombre"));
-					this.setDate(rs.getDate("fecha"));
+					this.setDate(rs.getDate("date"));
 					this.setPhoto(rs.getString("foto"));
 					this.setArtist(ArtistDAO.List_Artist_By_Id(rs.getInt("id_artista")));
 				}
@@ -97,7 +97,7 @@ public class DiscDAO extends Disc {
 					Disc a = new Disc();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
-					a.setDate(rs.getDate("fecha"));
+					a.setDate(rs.getDate("date"));
 					a.setPhoto(rs.getString("foto"));
 					a.setArtist(ArtistDAO.List_Artist_By_Id(rs.getInt("id_artista")));
 					disc = a;
@@ -129,7 +129,7 @@ public class DiscDAO extends Disc {
 					Disc a = new Disc();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
-					a.setDate(rs.getDate("fecha"));
+					a.setDate(rs.getDate("date"));
 					a.setPhoto(rs.getString("foto"));
 					a.setArtist(new Artist());
 					disc = a;
@@ -159,7 +159,7 @@ public class DiscDAO extends Disc {
 					Disc a = new Disc();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
-					a.setDate(rs.getDate("fecha"));
+					a.setDate(rs.getDate("date"));
 					a.setPhoto(rs.getString("foto"));
 					a.setArtist(ArtistDAO.List_Artist_By_Id(rs.getInt("id_artista")));
 					Disc.add(a);
@@ -190,7 +190,7 @@ public class DiscDAO extends Disc {
 					Disc a = new Disc();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
-					a.setDate(rs.getDate("fecha"));
+					a.setDate(rs.getDate("date"));
 					a.setPhoto(rs.getString("foto"));
 					a.setArtist(ArtistDAO.List_Artist_By_Id(rs.getInt("id_artista")));
 					Disc = a;
@@ -202,7 +202,60 @@ public class DiscDAO extends Disc {
 		}
 		return Disc;
 	}
+	/**
+	 * List all the disc name
+	 *
+	 * @return All the disc name
+	 */
+	public static List<String> List_All_Disc_Name() {
+		List<String> discs = new ArrayList<String>();
+		Connection c = Conexion.getConexion();
 
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_All);
+				ResultSet rs = ps.executeQuery();
+				while (rs != null && rs.next()) {
+					discs.add(rs.getString("nombre"));
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return discs;
+	}
+
+	/**
+	 * List Disc by name without the artist.
+	 *
+	 * @param id unique for all the Disc
+	 * @return the Disc with that id
+	 */
+	public static Disc List_Disc_By_Name_Lazy(Integer id) {
+		Disc disc = new Disc();
+		Connection c = Conexion.getConexion();
+
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_by_Name);
+				ps.setInt(1, id);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					Disc a = new Disc();
+					a.setId(rs.getInt("id"));
+					a.setName(rs.getString("nombre"));
+					a.setDate(rs.getDate("date"));
+					a.setPhoto(rs.getString("foto"));
+					a.setArtist(new Artist());
+					disc = a;
+				}
+				rs.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return disc;
+	}
 	/**
 	 * Create new Disc if don´t exist, or update if exist.
 	 * 
@@ -216,12 +269,12 @@ public class DiscDAO extends Disc {
 			try {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
 				q.setString(1, this.name);
-				q.setDate(2, this.date);
-				q.setString(3, this.photo);
+				q.setString(2, this.photo);
+				q.setDate(3, this.date);
 				q.setInt(4, this.artist.getId());
 				q.setString(5, this.name);
-				q.setDate(6, this.date);
-				q.setString(7, this.photo);
+				q.setString(6, this.photo);
+				q.setDate(7, this.date);
 				q.setInt(8, this.artist.getId());
 				int i = q.executeUpdate();
 				if (i >= 1) {

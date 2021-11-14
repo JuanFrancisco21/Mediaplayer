@@ -9,17 +9,18 @@ import java.util.List;
 
 import Model.Song;
 import Utils.Conexion;
+import Utils.Dialog;
 
 public class SongDAO extends Song{
-	private final static String SELECT_by_Name_DAO = "SELECT nombre, duracion, id_disco, id_genero FROM song WHERE nombre=";
-	private final static String INSERTUPDATE="INSERT INTO song (nombre, duracion, id_disco, id_genero) "
-			+ "VALUES (?,?,?,?) "
-			+ "ON DUPLICATE KEY UPDATE nombre=?, dureacion=?, id_disco=?, id_genero=?";
+	private final static String SELECT_by_Name_DAO = "SELECT nombre, nrepro, duracion, id_disco, id_genero FROM song WHERE nombre=";
+	private final static String INSERTUPDATE="INSERT INTO song (nombre, nrepro, duracion, id_disco, id_genero) "
+			+ "VALUES (?,?,?,?,?) "
+			+ "ON DUPLICATE KEY UPDATE nombre=?, nrepro=?, duracion=?, id_disco=?, id_genero=?";
     private final static String DELETE_by_Id = "DELETE FROM song WHERE id = ?";
     private final static String DELETE_by_Name = "DELETE FROM song WHERE nombre = ?";
     private final static String SELECT_All = "SELECT * FROM song";
-    private final static String SELECT_by_Id = "SELECT id, nombre, duracion, id_disco, id_genero FROM song WHERE id = ?";
-    private final static String SELECT_by_Name = "SELECT id, nombre, duracion, id_disco, id_genero FROM song WHERE nombre = ?";
+    private final static String SELECT_by_Id = "SELECT id, nombre, nrepro, duracion, id_disco, id_genero FROM song WHERE id = ?";
+    private final static String SELECT_by_Name = "SELECT id, nombre, nrepro, duracion, id_disco, id_genero FROM song WHERE nombre = ?";
     
     /**
      * Constructor
@@ -66,6 +67,7 @@ public class SongDAO extends Song{
 				if (rs.next()) {
 					this.setId(rs.getInt("id"));
 					this.setName(rs.getString("nombre"));
+					this.setNrepro(rs.getInt("nrepro"));
 					this.setDuration(rs.getInt("duracion"));
 					this.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
 					this.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
@@ -96,6 +98,7 @@ public class SongDAO extends Song{
 					Song a = new Song();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
+					a.setNrepro(rs.getInt("nrepro"));
 					a.setDuration(rs.getInt("duracion"));
 					a.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
 					a.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
@@ -128,6 +131,7 @@ public class SongDAO extends Song{
 					Song a = new Song();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
+					a.setNrepro(rs.getInt("nrepro"));
 					a.setDuration(rs.getInt("duracion"));
 					a.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
 					a.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
@@ -158,6 +162,7 @@ public class SongDAO extends Song{
 					Song a = new Song();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
+					a.setNrepro(rs.getInt("nrepro"));
 					a.setDuration(rs.getInt("duracion"));
 					a.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
 					a.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
@@ -189,8 +194,9 @@ public class SongDAO extends Song{
 					Song a = new Song();
 					a.setId(rs.getInt("id"));
 					a.setName(rs.getString("nombre"));
+					a.setNrepro(rs.getInt("nrepro"));
 					a.setDuration(rs.getInt("duracion"));
-					a.setDisc(DiscDAO.List_Disc_By_Id_Lazy(rs.getInt("id_disco")));
+					a.setDisc(DiscDAO.List_Disc_By_Id(rs.getInt("id_disco")));
 					a.setGender(GenderDAO.List_Gender_By_Id(rs.getInt("id_genero")));
 					Song = a;
 				}
@@ -215,17 +221,22 @@ public class SongDAO extends Song{
 			try {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
 				q.setString(1, this.name);
-				q.setInt(2, this.duration);
-				q.setInt(3, this.disc.getId());
-				q.setInt(4, this.gender.getId());
-				q.setString(5, this.name);
-				q.setInt(6, this.duration);
-				q.setInt(7, this.disc.getId());
-				q.setInt(8, this.gender.getId());
+				q.setInt(2, this.nrepro);
+				q.setInt(3, this.duration);
+				q.setInt(4, this.disc.getId());
+				q.setInt(5, this.gender.getId());
+				q.setString(6, this.name);
+				q.setInt(7, this.nrepro);
+				q.setInt(8, this.duration);
+				q.setInt(9, this.disc.getId());
+				q.setInt(10, this.gender.getId());
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
-				System.out.println("Error al guardar/insertar Cancion");
-				e.printStackTrace();
+ 				Dialog.showError("Crear Cancion", "Ha surgido un error al crear una cancion", "");
+ 				e.printStackTrace();
+
+			}catch (Exception e) {
+				Dialog.showError("Crear Cancion", "Ha surgido un error al crear una cancion", "");
 			}
 		}
 		return rs;
