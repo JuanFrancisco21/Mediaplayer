@@ -15,5 +15,4 @@ public interface IUser {
 
     Set<IList> getSubscribed();
 
-    Set<IPlay> getReproductions();
 }

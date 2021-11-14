@@ -13,13 +13,15 @@ import Model.Song;
 import Utils.Conexion;
 
 public class List_SongDAO extends List_Song {
-	private final static String INSERTUPDATE="INSERT INTO list_Song (id, id_lista, id_cancion) "
-			+ "VALUES (?,?,?) "
-			+ "ON DUPLICATE KEY UPDATE id=?, id_lista=?, id_cancion=?";
-    private final static String DELETE_by_Id = "DELETE FROM list_Song WHERE id = ?";
+	private final static String INSERTUPDATE="INSERT INTO list_Song ( id_lista, id_cancion) "
+			+ "VALUES (?,?) "
+			+ "ON DUPLICATE KEY UPDATE id_lista=?, id_cancion=?";
+    private final static String DELETE_by_Id = "DELETE FROM list_Song WHERE id_lista = ? AND id_cancion=?";
     private final static String SELECT_All = "SELECT * FROM list_Song";
     private final static String SELECT_All_By_List = "SELECT id_cancion FROM list_Song WHERE id_lista = ?";
     private final static String SELECT_by_Id = "SELECT id, id_lista, id_cancion FROM list_Song WHERE id = ?";
+    private final static String SELECT_by_Ids= "SELECT id, id_lista, id_cancion FROM list_Song WHERE id_lista = ? AND id_cancion = ?";
+
     
     /**
      * Constructor
@@ -78,7 +80,37 @@ public class List_SongDAO extends List_Song {
 		}
 		return List_Song;
 	}
+	/**
+	 * List List_Song by id of user and list
+	 *
+	 * @param id_lista from the list
+	 * @param id_song from the song
+	 * @return the List_Song with thats ids
+	 */
+	public static List_Song List_List_Song_By_Id(Integer id_lista, Integer id_song) {
+		List_Song List_Song = new List_Song();
+		Connection c = Conexion.getConexion();
 
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(SELECT_by_Ids);
+				ps.setInt(1, id_lista);
+				ps.setInt(2, id_song);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					List_Song a = new List_Song();
+					a.setId(rs.getInt("id"));
+					a.setList(PlaylistDAO.List_Playlist_By_Id(rs.getInt("id_lista")));
+					a.setSong(SongDAO.List_Song_By_Id(rs.getInt("id_cancion")));
+					List_Song = a;
+				}
+				rs.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return List_Song;
+	}
 	/**
 	 * List all the List_Song
 	 *
@@ -145,12 +177,10 @@ public class List_SongDAO extends List_Song {
 		if (con != null) {
 			try {
 				PreparedStatement q = con.prepareStatement(INSERTUPDATE);
-				q.setInt(1, this.id);
-				q.setInt(2, this.list.getId());
-				q.setInt(3, this.song.getId());
-				q.setInt(4, this.id);
-				q.setInt(5, this.list.getId());
-				q.setInt(6, this.song.getId());
+				q.setInt(1, this.list.getId());
+				q.setInt(2, this.song.getId());
+				q.setInt(3, this.list.getId());
+				q.setInt(4, this.song.getId());
 
 				int i = q.executeUpdate();
 				if (i >= 1) {
@@ -202,7 +232,8 @@ public class List_SongDAO extends List_Song {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(DELETE_by_Id);
-				ps.setInt(1, this.getId());
+				ps.setInt(1, this.getList().getId());
+				ps.setInt(2, this.getSong().getId());
 				int i = ps.executeUpdate();
 				if (i >= 1) {
 					result = true;

@@ -15,5 +15,4 @@ public interface ISong {
 
     IDisc getDisc();
 
-    Set<IPlay> getReproductions();
 }
