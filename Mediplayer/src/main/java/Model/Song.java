@@ -3,6 +3,7 @@ package Model;
 public class Song {
 	protected int id;
 	protected String name;
+	protected int nrepro;
 	protected int duration;
 	protected Gender gender;
 	protected Disc disc;
@@ -10,6 +11,7 @@ public class Song {
 	public Song() {
 		this.id = -1;
 		this.name = "";
+		this.nrepro = 0;
 		this.duration = -1;
 		this.gender = new Gender();
 		this.disc = new Disc();
@@ -17,6 +19,7 @@ public class Song {
 	public Song(String name, int duration, Gender gender, Disc disc) {
 		this.id = -1;
 		this.name = name;
+		this.nrepro = 0;
 		this.duration = duration;
 		this.gender = gender;
 		this.disc = disc;
@@ -24,6 +27,7 @@ public class Song {
 	public Song(int id, String name, int duration, Gender gender, Disc disc) {
 		this.id = id;
 		this.name = name;
+		this.nrepro = 0;
 		this.duration = duration;
 		this.gender = gender;
 		this.disc = disc;
@@ -39,6 +43,12 @@ public class Song {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getNrepro() {
+		return nrepro;
+	}
+	public void setNrepro(int nrepro) {
+		this.nrepro = nrepro;
 	}
 	public int getDuration() {
 		return duration;
@@ -95,8 +105,10 @@ public class Song {
 	}
 	@Override
 	public String toString() {
-		return "Song [id=" + id + ", name=" + name + ", duration=" + duration + ", gender=" + gender + ", disc=" + disc + "]";
+		return "Song [id=" + id + ", name=" + name + ", nrepro=" + nrepro + ", duration=" + duration + ", gender="
+				+ gender + ", disc=" + disc + "]";
 	}
+	
 	
 	
 }

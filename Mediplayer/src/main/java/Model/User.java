@@ -4,21 +4,26 @@ public class User {
 	protected int id;
 	protected String name;
 	protected String correo;
+	protected String password;
 	
 	public User() {
 		this.id = -1;
 		this.name = "";
 		this.correo = "";
+		this.password = "";
 	}
-	public User(String name, String correo) {
+	public User(String name, String correo, String password) {
 		this.id = -1;
 		this.name = name;
 		this.correo = correo;
+		this.password = password;
 	}
-	public User(int id, String name, String correo) {
+	public User(int id, String name, String correo, String password) {
 		this.id = id;
 		this.name = name;
 		this.correo = correo;
+		this.password = password;
+
 	}
 	public int getId() {
 		return id;
@@ -37,6 +42,12 @@ public class User {
 	}
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	@Override
 	public int hashCode() {
@@ -72,8 +83,9 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", name=" + name + ", correo=" + correo + "]";
+		return "User [id=" + id + ", name=" + name + ", correo=" + correo + ", password=" + password + "]";
 	}
+	
 	
 	
 }
