@@ -9,13 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Conexion {
 	private static Connection con;
 	
-	private final static String server="jdbc:Mysql://localhost";
-	private final static String database="mediaplayer";
-	private final static String username="root";
-	private final static String password="";
+	private final static String server=XMLUtil.loadDataXML().getServer();
+	private final static String database=XMLUtil.loadDataXML().getDatabase();
+	private final static String username=XMLUtil.loadDataXML().getUserName();
+	private final static String password=XMLUtil.loadDataXML().getPassword();
 	
 	public static void conecta() {
 		 try {
@@ -28,12 +29,19 @@ public class Conexion {
 			System.out.println("Error al conectar la base de datos");
 			con=null;
 			e.printStackTrace();
+		}catch (Exception e) {
+			Dialog.showError("Error", "Conxion fallida", "");
 		}
 	}
 	
 	public static Connection getConexion() {
-		if(con==null) {
-			conecta();
+		try {
+
+			if (con == null) {
+				conecta();
+			}
+		} catch (Exception e) {
+			Dialog.showError("Error", "Conxion fallida", "");
 		}
 		return con;
 	}

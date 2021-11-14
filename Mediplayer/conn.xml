@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<conns>
+    <server>jdbc:Mysql://localhost</server>
+    <database>mediaplayer</database>
+    <userName>root</userName>
+    <password></password>
+</conns>
