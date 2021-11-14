@@ -24,11 +24,9 @@ public class Conexion {
 			con=DriverManager.getConnection(server+"/"+database,username,password);
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error al conectar la base de datos");
-			e.printStackTrace();
 		} catch (SQLException e) {
 			System.out.println("Error al conectar la base de datos");
 			con=null;
-			e.printStackTrace();
 		}catch (Exception e) {
 			Dialog.showError("Error", "Conxion fallida", "");
 		}
