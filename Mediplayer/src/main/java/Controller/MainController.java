@@ -49,7 +49,7 @@ public class MainController implements Initializable{
 	@FXML
 	private Tab TabAdmin;
 	@FXML
-	private Tab TabBuscar;
+	private Tab TabBuscar; 
 
 	@FXML
 	private static User user;
