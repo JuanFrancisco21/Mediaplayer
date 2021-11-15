@@ -75,14 +75,16 @@
                                           <Insets right="15.0" />
                                        </padding>
                                     </ButtonBar>
-                                    <ButtonBar layoutY="324.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                    <ButtonBar layoutY="324.0" prefHeight="40.0" prefWidth="188.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <buttons>
-                                          <Button fx:id="CancionesPlaylist" mnemonicParsing="false" onAction="#addSongtoPlylist" text="Añadir" visible="false" />
-                                          <Button fx:id="CancionesPlaylist2" mnemonicParsing="false" onAction="#BorrarSongfromPlylist" text="Quitar Canción" visible="false" />
+                                          <AnchorPane prefHeight="40.0" prefWidth="203.0">
+                                             <children>
+                                                <Button fx:id="CancionesPlaylist2" mnemonicParsing="false" onAction="#BorrarSongfromPlylist" text="Quitar Canción" visible="false" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="5.0" />
+                                                <Button fx:id="CancionesPlaylist" mnemonicParsing="false" onAction="#addSongtoPlylist" text="Añadir" visible="false" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="105.0" />
+                                                <Button fx:id="Reproducir" mnemonicParsing="false" onAction="#ReproducirCancion" text="Reproducir" visible="false" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="105.0" />
+                                             </children>
+                                          </AnchorPane>
                                        </buttons>
-                                       <padding>
-                                          <Insets right="15.0" />
-                                       </padding>
                                     </ButtonBar>
                                  </children>
                               </AnchorPane>

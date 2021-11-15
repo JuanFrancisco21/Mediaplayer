@@ -116,6 +116,8 @@ public class MainController implements Initializable{
 	@FXML
 	private Button CancionesPlaylist2;
 	@FXML
+	private Button Reproducir;
+	@FXML
 	private Button PlaylistPlaylist;
 	@FXML
 	private Button PlaylistPlaylist2;
@@ -253,6 +255,9 @@ public class MainController implements Initializable{
 		    public void initPlaylistBuscar() {
 		    	showCancionesTab();
 		    	CancionesPlaylist.setVisible(false);
+		    	CancionesPlaylist2.setVisible(false);
+				Reproducir.setVisible(false);
+
 		    	PlaylistPlaylist.setVisible(true);
 		    	PlaylistPlaylist2.setVisible(true);
 		    	PlaylistPlaylist.setDisable(true);
@@ -306,7 +311,7 @@ public class MainController implements Initializable{
 		 	}
 		    private void configuraTablaallPlaylist() {
 				this.allplaylist = FXCollections.observableArrayList();
-				this.allplaylist.setAll(PlaylistDAO.List_All_Playlist());
+				this.allplaylist.setAll(PlaylistDAO.List_All_Playlist_Usernot(user));
 
 				cpp1.setCellValueFactory(cellData -> {
 					return new SimpleObjectProperty<>(cellData.getValue().getName());
@@ -430,6 +435,7 @@ public class MainController implements Initializable{
 				CancionesPlaylist.setVisible(true);
 				BorrarPlaylist.setVisible(false);
 				AñadirPlaylist.setVisible(false);
+				Reproducir.setVisible(false);
 				PlaylistPlaylist.setVisible(false);
 				PlaylistPlaylist2.setVisible(false);
 			}
@@ -438,9 +444,19 @@ public class MainController implements Initializable{
 				PlaylistPlaylist.setVisible(false);
 				PlaylistPlaylist2.setVisible(false);
 				CancionesPlaylist.setVisible(false);
+				Reproducir.setVisible(false);
 				BorrarPlaylist.setVisible(true);
 				AñadirPlaylist.setVisible(true);
 			}
+    @FXML
+    public void ReproducirCancion() {
+    	Song s=tablaCancionesPlaylist.getSelectionModel().getSelectedItem();
+    	s.setNrepro(s.getNrepro()+1);
+    	SongDAO save=new SongDAO(s);
+    	System.out.println(save);
+    	save.update();
+    	//configuraTablaPlaylist();
+    }
     
     /**
  	 * Método para añadir a una cancion en la base de datos, como tambien en la
@@ -546,12 +562,18 @@ public class MainController implements Initializable{
 		tablaCancionesPlaylist.getSelectionModel().selectedItemProperty()
 		.addListener((observable, oldvalue, newvalue) -> showRemoveSong(newvalue));
 		tablaCancionesPlaylist.setItems(canciones);
+		
+		showRemoveSong(null);
 	}
     private void showRemoveSong(Song c) {
     	if (c != null) {
     		CancionesPlaylist2.setVisible(true);
+			Reproducir.setVisible(true);
+
     	}else {
     		CancionesPlaylist2.setVisible(false);
+			Reproducir.setVisible(false);
+
 
     	}
     }

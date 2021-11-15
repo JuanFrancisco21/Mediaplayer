@@ -9,6 +9,7 @@ import java.util.List;
 
 import Model.Artist;
 import Model.Playlist;
+import Model.User;
 import Utils.Conexion;
 
 public class PlaylistDAO extends Playlist {
@@ -18,6 +19,8 @@ public class PlaylistDAO extends Playlist {
 	private final static String DELETE_by_Id = "DELETE FROM list WHERE id = ?";
 	private final static String DELETE_by_Name = "DELETE FROM list WHERE nombre = ?";
 	private final static String SELECT_All = "SELECT * FROM list";
+	private final static String SELECT_All_Usernot = "SELECT * FROM list where not id_usuario=?";
+
 	private final static String SELECT_by_Id = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE id = ?";
 	private final static String SELECT_by_Id_User = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE id_usuario = ?";
 	private final static String SELECT_by_Name = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE nombre = ?";
@@ -117,6 +120,32 @@ public class PlaylistDAO extends Playlist {
 		try {
 			Connection c = Conexion.getConexion();
 			PreparedStatement ps = c.prepareStatement(SELECT_All);
+			ResultSet rs = ps.executeQuery();
+			while (rs != null && rs.next()) {
+				Playlist a = new Playlist();
+				a.setId(rs.getInt("id"));
+				a.setName(rs.getString("nombre"));
+				a.setDescription(rs.getString("descripcion"));
+				a.setUser(UserDAO.List_User_By_Id(rs.getInt("id_usuario")));
+				a.setSongs(List_SongDAO.List_All_Songs_By_Playlist(rs.getInt("id")));
+				Playlist.add(a);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return Playlist;
+	}
+	/**
+	 * List all the Playlist except the user lists
+	 *
+	 * @return All the Playlist
+	 */
+	public static List<Playlist> List_All_Playlist_Usernot(User u) {
+		List<Playlist> Playlist = new ArrayList<Playlist>();
+		try {
+			Connection c = Conexion.getConexion();
+			PreparedStatement ps = c.prepareStatement(SELECT_All_Usernot);
+			ps.setInt(1, u.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs != null && rs.next()) {
 				Playlist a = new Playlist();
