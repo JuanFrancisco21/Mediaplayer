@@ -19,7 +19,7 @@ public class PlaylistDAO extends Playlist {
 	private final static String DELETE_by_Id = "DELETE FROM list WHERE id = ?";
 	private final static String DELETE_by_Name = "DELETE FROM list WHERE nombre = ?";
 	private final static String SELECT_All = "SELECT * FROM list";
-	private final static String SELECT_All_Usernot = "SELECT * FROM list where not id_usuario=?";
+	private final static String SELECT_All_Usernot = "SELECT * FROM list where id_usuario=?";
 
 	private final static String SELECT_by_Id = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE id = ?";
 	private final static String SELECT_by_Id_User = "SELECT id, nombre, descripcion, id_usuario FROM list WHERE id_usuario = ?";
