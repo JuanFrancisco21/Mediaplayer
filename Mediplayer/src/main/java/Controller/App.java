@@ -7,8 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
+
+import Utils.Conexion;
 
 /**
  * JavaFX App
@@ -26,6 +27,13 @@ public class App extends Application {
           stage.getIcons().add(new Image("https://play-lh.googleusercontent.com/7N4p6FtJ1jsI4vSEYY40HhHcYXTQKV5nEXyle5AMj_FMxU-UqsN_dxFL80kpM81WCQ"));
           stage.setTitle("SoungApp");
           stage.show();
+          stage.setOnCloseRequest(event->{
+          	try {
+              	Conexion.cerrarConexion();
+  			} catch (Exception e) {
+  				System.out.println("");			
+  			}
+      	});
     }
 
     public static void setRoot(String fxml) throws IOException {

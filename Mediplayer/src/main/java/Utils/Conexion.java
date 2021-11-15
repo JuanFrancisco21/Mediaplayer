@@ -50,6 +50,13 @@ public class Conexion {
 		return con;
 	}
 	
+	public static void cerrarConexion() {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			
+		}
+	}
 		
 	
 	/**
