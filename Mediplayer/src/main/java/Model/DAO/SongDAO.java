@@ -15,7 +15,10 @@ public class SongDAO extends Song{
 	private final static String SELECT_by_Name_DAO = "SELECT nombre, nrepro, duracion, id_disco, id_genero FROM song WHERE nombre=";
 	private final static String INSERTUPDATE="INSERT INTO song (nombre, nrepro, duracion, id_disco, id_genero) "
 			+ "VALUES (?,?,?,?,?) "
-			+ "ON DUPLICATE KEY UPDATE nombre=?, nrepro=?, duracion=?, id_disco=?, id_genero=?";
+			+ "ON DUPLICATE KEY UPDATE id=?, nombre=?, nrepro=?, duracion=?, id_disco=?, id_genero=?";
+	private final static String UPDATE="INSERT INTO song ( id ,nombre, nrepro, duracion, id_disco, id_genero) "
+			+ "VALUES (?,?,?,?,?,?) "
+			+ "ON DUPLICATE KEY UPDATE id=?, nombre=?, nrepro=?, duracion=?, id_disco=?, id_genero=?";
     private final static String DELETE_by_Id = "DELETE FROM song WHERE id = ?";
     private final static String DELETE_by_Name = "DELETE FROM song WHERE nombre = ?";
     private final static String SELECT_All = "SELECT * FROM song";
@@ -40,6 +43,7 @@ public class SongDAO extends Song{
 		this.setDuration(a.getDuration());
 		this.setDisc(a.getDisc());
 		this.setGender(a.getGender());
+		this.setNrepro(a.getNrepro());
 	}
 
 	/**
@@ -230,6 +234,41 @@ public class SongDAO extends Song{
 				q.setInt(8, this.duration);
 				q.setInt(9, this.disc.getId());
 				q.setInt(10, this.gender.getId());
+				rs = q.executeUpdate();
+			} catch (SQLException e) {
+ 				Dialog.showError("Crear Cancion", "Ha surgido un error al crear una cancion", "");
+ 				e.printStackTrace();
+
+			}catch (Exception e) {
+				Dialog.showError("Crear Cancion", "Ha surgido un error al crear una cancion", "");
+			}
+		}
+		return rs;
+	}
+	/**
+	 * Update new Song if don´t exist, or update if exist.
+	 * 
+	 * @return true if the Song has been updated/insert, false if not
+	 */
+	public int update() {
+		int rs = 0;
+		Connection con = Conexion.getConexion();
+
+		if (con != null) {
+			try {
+				PreparedStatement q = con.prepareStatement(UPDATE);
+				q.setInt(1, this.id);
+				q.setString(2, this.name);
+				q.setInt(3, this.nrepro);
+				q.setInt(4, this.duration);
+				q.setInt(5, this.disc.getId());
+				q.setInt(6, this.gender.getId());
+				q.setInt(7, this.id);
+				q.setString(8, this.name);
+				q.setInt(9, this.nrepro);
+				q.setInt(10, this.duration);
+				q.setInt(11, this.disc.getId());
+				q.setInt(12, this.gender.getId());
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
  				Dialog.showError("Crear Cancion", "Ha surgido un error al crear una cancion", "");
