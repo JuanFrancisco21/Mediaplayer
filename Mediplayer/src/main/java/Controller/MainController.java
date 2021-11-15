@@ -500,8 +500,8 @@ public class MainController implements Initializable{
     @FXML
 	private void configuraTablaPlaylist() {
 		this.playlist = FXCollections.observableArrayList();
-		this.playlist.setAll(PlaylistDAO.List_All_Playlist_By_User(2));
-		this.playlist.addAll(SubscribeDAO.List_All_Subscribe_Of_User(2));
+		this.playlist.setAll(PlaylistDAO.List_All_Playlist_By_User(user.getId()));
+		this.playlist.addAll(SubscribeDAO.List_All_Subscribe_Of_User(user.getId()));
 
 		cp1.setCellValueFactory(cellData -> {
 			return new SimpleObjectProperty<>(cellData.getValue().getName());

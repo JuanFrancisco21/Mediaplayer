@@ -22,7 +22,7 @@ public class App extends Application {
     	  Parent root = loadFXML("Login");
           scene = new Scene(root, root.prefWidth(0)+100, root.prefHeight(0)+50);
           stage.setScene(scene);
-          //stage.setResizable(false);
+          //stage.setResizable(false); 
           stage.getIcons().add(new Image("https://play-lh.googleusercontent.com/7N4p6FtJ1jsI4vSEYY40HhHcYXTQKV5nEXyle5AMj_FMxU-UqsN_dxFL80kpM81WCQ"));
           stage.setTitle("SoungApp");
           stage.show();
