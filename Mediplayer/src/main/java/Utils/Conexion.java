@@ -1,5 +1,8 @@
 package Utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,6 +21,9 @@ public class Conexion {
 	private final static String username=XMLUtil.loadDataXML().getUserName();
 	private final static String password=XMLUtil.loadDataXML().getPassword();
 	
+	/**
+	 * Metodo de conexion con la bbdd sql.
+	 */
 	public static void conecta() {
 		 try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -32,6 +38,7 @@ public class Conexion {
 		}
 	}
 	
+	
 	public static Connection getConexion() {
 		try {
 			if (con == null) {
@@ -42,6 +49,8 @@ public class Conexion {
 		}
 		return con;
 	}
+	
+		
 	
 	/**
 	 * Metodo de CRUD en phpmyadmin.
@@ -69,5 +78,65 @@ public class Conexion {
 		}
 		
 		return resultado;
+	}
+	/**
+	 * Chekea si existe la BBDD y si no existe la crea.
+	 */
+	public static void checkBBDD() {
+		Connection c = Conexion.getConexion();
+		try {
+			Statement ps = c.createStatement();
+			ResultSet rs = ps.executeQuery("SHOW DATABASES LIKE 'tienda'");
+			if (rs.next())
+			{
+				
+			}else {				
+				crearbbdd();
+			}
+			
+		} catch (SQLException e) {
+			
+		}
+	}
+	/**
+	 * Crea base de datos guardada en resources.	
+	 */
+	public static void crearbbdd() {
+		Connection c = Conexion.getConexion();
+		String filePath = new File("").getAbsolutePath();
+
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		String crear = "";
+
+		try {
+			// Apertura del fichero y creacion de BufferedReader para poder
+			// hacer una lectura comoda (disponer del metodo readLine()).
+			archivo = new File(filePath + "\\src\\main\\resources\\Controller\\mediaplayer.txt");
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			// Lectura del fichero
+			String linea;
+            Statement ps = c.createStatement();
+
+			while ((linea = br.readLine()) != null) {
+				ps.executeUpdate(linea);
+			}
+			// System.out.println(crear);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// En el finally cerramos el fichero, para asegurarnos
+			// que se cierra tanto si todo va bien como si salta
+			// una excepcion.
+			try {
+				if (null != fr) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 }

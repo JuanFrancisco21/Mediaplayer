@@ -43,11 +43,16 @@ public class LoginController implements Initializable {
 	
 	private User usuario;
 
-	
+	/**
+	 * Al iniciarse comprueba si existe la bbdd y si no existe la crea.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		//Utils.Conexion.checkBBDD();
 	}	
+	/**
+	 * Verifica que el usuario es correcto.
+	 */
 	public Boolean CheckUser() {
 		Boolean result = false;
 		if (username.getText()!=null && username.getText()!="" && username.getText()!=" ") {
@@ -71,9 +76,11 @@ public class LoginController implements Initializable {
 		
 		return result;
 	}
+	/**
+	 * Cambia de vista al checkear un usuario válido.
+	 */
 	@FXML
-	public Boolean LogUser() {
-		Boolean result = false;
+	public void LogUser() {
 		if (CheckUser()) {
     		try { 
     			MainController.initController(usuario);
@@ -84,11 +91,12 @@ public class LoginController implements Initializable {
     			Dialog.showError("Error Login", "Error al Entrar", "Usuario no válido");
     		}
 		}
-		return result;
 	}
+	/**
+	 * Metodo para mostrar componentes para registrar un usario.
+	 */
 	@FXML
-	public Boolean LoadSingup() {
-		Boolean result = false;
+	public void LoadSingup() {
     		try { 
     			this.sing_in.setVisible(false);
     			this.sing_up.setVisible(false);
@@ -108,9 +116,12 @@ public class LoginController implements Initializable {
     		} catch (Exception e) {
     			Dialog.showError("Error Register", "Error ", "Usuario no válido");
     		}
-		return result;
 	}
 	
+	/**
+	 * Método que crea y guarda usuario válido.
+	 * @return true si se a creado, false en caso de no crearlo.
+	 */
 	public Boolean CreateUser() {
 		Boolean result = false;
 		if (username.getText().length()>2 && password.getText() != null && password2.getText() != null) {
@@ -145,9 +156,11 @@ public class LoginController implements Initializable {
 		return result;
 	}
 	
+	/**
+	 * Método para mostrar componentes para logearse en la app.
+	 */
 	@FXML
-	public Boolean Return() {
-		Boolean result = false;
+	public void Return() {
 		try {
 			this.sing_in.setVisible(true);
 			this.sing_up.setVisible(true);
@@ -164,27 +177,25 @@ public class LoginController implements Initializable {
 			this.password.setText("");
 			this.password2.setText("");
 
-			result = true;
 		} catch (Exception e) {
 			Dialog.showError("Error Register", "Error al Entrar", "");
 		}
-		return result;
 	}
 	
+	/**
+	 * Al registrar usuario cambia los componentes para poder logearse.
+	 */
 	@FXML
-	public Boolean ReturnLogin() {
-		Boolean result = false;
+	public void ReturnLogin() {
 		
 			try { 
 				if(CreateUser()) {
     			Return();
-    			result=true;
 				}
     		} catch (Exception e) {
     			Dialog.showError("Error Register", "Error al Entrar", "");
     		}
 		
-		return result;
 	}
 
 }
