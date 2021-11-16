@@ -568,9 +568,12 @@ public class MainController implements Initializable{
     private void showRemoveSong(Song c) {
  		Playlist select= tablaPlayList.getSelectionModel().getSelectedItem();
 
-    	if (c != null && select.getUser().getName().equals(user.getName())) {
-    		CancionesPlaylist2.setVisible(true);
-			Reproducir.setVisible(true);
+    	if (c != null) {
+    		if (select.getUser().getName().equals(user.getName())) {
+				
+    			CancionesPlaylist2.setVisible(true);
+			}
+    		Reproducir.setVisible(true);
 
     	}else {
     		CancionesPlaylist2.setVisible(false);
@@ -588,15 +591,16 @@ public class MainController implements Initializable{
 			canciones.clear();
 			List<Song> r=List_SongDAO.List_All_Songs_By_Playlist(c.getId());
 			canciones.addAll(r);
-			BorrarPlaylist.setDisable(false);
 			CancionesPlaylist.setDisable(false);
 			NombrePlaylist.setText(c.getName());
 			DescripcionPlaylist.setText(c.getDescription());
 			CreadorPlaylist.setText(c.getUser().getName());
 			if (c.getUser().getName().equals(user.getName())) {
 				
+				BorrarPlaylist.setDisable(false);
 				TabBuscar.setDisable(false);
 			}else {
+				BorrarPlaylist.setDisable(true);
 				TabBuscar.setDisable(true);
 
 			}
