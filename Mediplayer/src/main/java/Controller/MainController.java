@@ -388,7 +388,7 @@ public class MainController implements Initializable{
 		 		List_Song a = new List_Song();
 		 		Playlist select= tablaPlayList.getSelectionModel().getSelectedItem();
 		 		Song selected=tablaallCanciones.getSelectionModel().getSelectedItem();
-		 		if ( selected != null && select!=null && List_SongDAO.List_List_Song_By_Id(select.getId(), selected.getId()).getId()==-1) {
+		 		if ( select.getUser().getName().equals(user.getName())&& selected != null && select!=null && List_SongDAO.List_List_Song_By_Id(select.getId(), selected.getId()).getId()==-1) {
 		 			try {
 		 				a.setSong(selected);
 		 				a.setList(select);
@@ -566,7 +566,9 @@ public class MainController implements Initializable{
 		showRemoveSong(null);
 	}
     private void showRemoveSong(Song c) {
-    	if (c != null) {
+ 		Playlist select= tablaPlayList.getSelectionModel().getSelectedItem();
+
+    	if (c != null && select.getUser().getName().equals(user.getName())) {
     		CancionesPlaylist2.setVisible(true);
 			Reproducir.setVisible(true);
 
@@ -591,7 +593,13 @@ public class MainController implements Initializable{
 			NombrePlaylist.setText(c.getName());
 			DescripcionPlaylist.setText(c.getDescription());
 			CreadorPlaylist.setText(c.getUser().getName());
-			TabBuscar.setDisable(false);
+			if (c.getUser().getName().equals(user.getName())) {
+				
+				TabBuscar.setDisable(false);
+			}else {
+				TabBuscar.setDisable(true);
+
+			}
 
 		} else {
 			BorrarPlaylist.setDisable(true);
